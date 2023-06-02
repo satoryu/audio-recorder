@@ -5,5 +5,6 @@
     %i.bi.bi-play-fill
   %button.btn.btn-danger{ data: { action: 'audio-recorder#stop' }}
     %i.bi.bi-stop-fill
+  %audio{ controls: true, data: { 'audio-recorder-target' => 'audio' }}
 
-  %audio{ data: { 'audio-recorder-target' => 'audio' }}
+  = form_tag audios_transcript_path, { data: { 'audio-recorder-target' => 'form' } }

@@ -15,11 +15,10 @@ export default class extends Controller {
 
         this.audioRecorder.onstop = (_event) => {
           const blob = new Blob(chunks, { type: 'audio/webm' })
-          console.log(blob)
           const audioUrl = window.URL.createObjectURL(blob)
           this.audioTarget.src = audioUrl
-          this.audioTarget.controls = true
           chunks = []
+          this.transcript(blob)
         }
       }).catch((error) => console.log(error))
   }
@@ -35,5 +34,19 @@ export default class extends Controller {
       this.audioRecorder.stop()
       console.log('Stopped recording')
     }
+  }
+
+  transcript(blob) {
+    const csrfParam = document.head.querySelector('meta[name="csrf-param"]').content
+    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content
+    const formData = new FormData()
+    formData.set(csrfParam, csrfToken)
+    formData.set('audio_file', blob, 'audio.webm')
+
+    fetch('/audios/transcript', {
+      method: 'POST',
+      body: formData
+    }).then((response) => response.json() )
+    .then((json) => console.log(json))
   }
 }
