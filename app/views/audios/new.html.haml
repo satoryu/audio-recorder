@@ -1,0 +1,9 @@
+%h1 Audio Recorder
+
+.audio-recorder{ data: { controller: 'audio-recorder' } }
+  %button.btn.btn-primary{ data: { action: 'audio-recorder#start' }}
+    %i.bi.bi-play-fill
+  %button.btn.btn-danger{ data: { action: 'audio-recorder#stop' }}
+    %i.bi.bi-stop-fill
+
+  %audio{ data: { 'audio-recorder-target' => 'audio' }}
