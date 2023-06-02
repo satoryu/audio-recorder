@@ -8,12 +8,18 @@ export default class extends Controller {
       .then((stream) => {
         this.audioRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' })
 
+        let chunks = []
         this.audioRecorder.ondataavailable = (event) => {
-          const blob = new Blob([event.data])
+          chunks.push(event.data)
+        }
+
+        this.audioRecorder.onstop = (_event) => {
+          const blob = new Blob(chunks, { type: 'audio/webm' })
           console.log(blob)
           const audioUrl = window.URL.createObjectURL(blob)
           this.audioTarget.src = audioUrl
           this.audioTarget.controls = true
+          chunks = []
         }
       }).catch((error) => console.log(error))
   }
