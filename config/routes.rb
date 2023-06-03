@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  post "audios/transcript"
+  post "audios/transcribe"
 
   root "audios#new"
 end

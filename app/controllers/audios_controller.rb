@@ -1,9 +1,17 @@
 class AudiosController < ApplicationController
   def new; end
 
-  def transcript
-    p params[:audio_file]
+  def transcribe
+    client = OpenAI::Client.new
 
-    render json: { text: 'success' }
+    response = client.transcribe(
+      parameters: {
+        model: 'whisper-1',
+        language: 'ja',
+        file: params[:audio_file].open
+      }
+    )
+
+    render json: response
   end
 end

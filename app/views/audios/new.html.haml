@@ -7,4 +7,5 @@
     %i.bi.bi-stop-fill
   %audio{ controls: true, data: { 'audio-recorder-target' => 'audio' }}
 
-  = form_tag audios_transcript_path, { data: { 'audio-recorder-target' => 'form' } }
+  %form
+    %textarea{ cols: 72, rows: 10, data: { 'audio-recorder-target' => 'transcription'}}

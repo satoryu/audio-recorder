@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["audio"]
+  static targets = ["audio", "transcription"]
 
   connect() {
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -43,10 +43,12 @@ export default class extends Controller {
     formData.set(csrfParam, csrfToken)
     formData.set('audio_file', blob, 'audio.webm')
 
-    fetch('/audios/transcript', {
+    fetch('/audios/transcribe', {
       method: 'POST',
       body: formData
     }).then((response) => response.json() )
-    .then((json) => console.log(json))
+    .then((json) => {
+      this.transcriptionTarget.textContent += json.text
+    })
   }
 }
